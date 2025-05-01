@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>❄</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background-color: rgb(186, 218, 255);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Dancing Script', cursive;
+      overflow: hidden;
+    }
+
+    .glow-link-container {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .glow-link {
+      font-size: 32px;
+      color: white;
+      text-decoration: none;
+      position: relative;
+      filter: drop-shadow(0 0 5px violet)
+              drop-shadow(0 0 10px purple)
+              drop-shadow(0 0 15px violet);
+      transition: opacity 0.4s ease;
+    }
+
+    /* Smoke animation */
+    .smoke {
+      position: absolute;
+      top: -20px;
+      left: -30px;
+      width: 120%;
+      height: 150%;
+      background: radial-gradient(ellipse at center, rgba(255,255,255,0.1) 0%, transparent 80%);
+      animation: smokeAnim 4s infinite ease-in-out alternate;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .glow-link-container:hover .smoke {
+      opacity: 1;
+    }
+
+    @keyframes smokeAnim {
+      0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+      100% { transform: translate(10px, -20px) scale(1.2); opacity: 0.6; }
+    }
+
+    /* Tooltip popup */
+    .tooltip {
+      position: absolute;
+      bottom: 120%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #2c003e;
+      color: #f7ceff;
+      padding: 6px 12px;
+      border-radius: 8px;
+      white-space: nowrap;
+      font-size: 14px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      box-shadow: 0 0 8px #cc8eff;
+    }
+
+    .glow-link-container:hover .tooltip {
+      opacity: 1;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="glow-link-container">
+    <div class="smoke"></div>
+    <a class="glow-link" href="2.htm" target="_blank">[Click Me]</a>
+    <div class="tooltip">RICE</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Remi's Dreamy World</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: #fdf1f7;
+      color: #6b5e62;
+      overflow-x: hidden;
+    }
+
+    h1, h2,h3 {
+      text-align: center;
+      margin: 2rem 1rem;
+      color: #d08bc4;
+      text-shadow: 0 0 10px rgba(255, 192, 203, 0.3);
+    }
+
+    h2 {
+        padding-bottom: 15px;
+    }
+
+    h3 {
+        font-size: 24px;
+    }
+
+    .section {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .info-box {
+      font-size: 1.2rem;
+      margin: 1rem auto;
+      max-width: 600px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 20px;
+      padding: 1rem 2rem;
+      box-shadow: 0 0 20px rgba(255,192,203,0.2);
+      transition: transform 0.3s;
+    }
+
+    .info-box:hover {
+      transform: scale(1.02);
+    }
+
+    .popup {
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+      color: #c488b3;
+      text-decoration: underline;
+    }
+
+    .popup .tooltip {
+      visibility: hidden;
+      width: 200px;
+      background-color: #ffeef5;
+      color: #6b5e62;
+      text-align: center;
+      border-radius: 10px;
+      padding: 10px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.4s;
+      box-shadow: 0 0 10px rgba(255,182,193,0.3);
+    }
+
+    .popup:hover .tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* Favorite foods */
+    .food-gallery {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .food-item {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: -40px;
+      z-index: 1;
+      transition: all 0.3s ease;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      cursor: pointer;
+    }
+
+    .food-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all 0.3s ease;
+      filter: brightness(0.9);
+    }
+
+    .food-item:hover {
+      transform: scale(1.3);
+      z-index: 10;
+    }
+
+    /* Spinning favorite songs */
+    .song-gallery {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 3rem auto;
+      flex-wrap: wrap;
+    }
+
+    .song-item {
+      width: 100px;
+      height: 100px;
+      animation: spin 10s linear infinite;
+      position: relative;
+    }
+
+    .song-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(255,192,203,0.4);
+      transition: transform 0.3s;
+    }
+
+    .song-item:hover {
+      animation-play-state: paused;
+    }
+
+    .hover-button {
+      position: absolute;
+      top: 50%;
+      cursor: pointer;
+      z-index: 2;
+      transition: transform 0.3s ease;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .food-gallery, .song-gallery {
+        flex-direction: column;
+        align-items: center;
+      }
+      .food-item {
+        margin: 10px;
+      }
+    }
+
+     /* Floating pastel shapes */
+  .floating-shape {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 200, 245, 0.4);
+    border-radius: 50%;
+    animation: floatUp 20s infinite ease-in;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes floatUp {
+    0% {
+      transform: translateY(100vh) scale(0.5);
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(-10vh) scale(1);
+      opacity: 0;
+    }
+  }
+
+  /* Clickable effect */
+  body.clicked::after {
+    content: '';
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    border: 3px solid #fbc4de;
+    border-radius: 50%;
+    animation: clickEffect 0.6s ease-out;
+    pointer-events: none;
+    top: var(--click-y);
+    left: var(--click-x);
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+  }
+
+  @keyframes clickEffect {
+    0% {
+      transform: scale(0.2) translate(-50%, -50%);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(2.5) translate(-50%, -50%);
+      opacity: 0;
+    }
+  }
+
+  /* Animated intro */
+  .intro-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(145deg, #fce4ec, #e0f7fa);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeOut 2.5s ease forwards;
+    animation-delay: 1.2s;
+  }
+
+  .intro-overlay h1 {
+    font-size: 2.5rem;
+    color: #c488b3;
+    text-shadow: 0 0 20px rgba(255, 192, 203, 0.5);
+    animation: popIn 1.2s ease-out;
+  }
+
+  @keyframes fadeOut {
+    to {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  @keyframes popIn {
+    0% {
+      transform: scale(0.5);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  </style>
+</head>
+<body>
+
+    <div class="intro-overlay">
+        <h1>Welcome ✨</h1>
+      </div>
+
+  <h1>Welcome to Remi's Dreamy World</h1>
+
+  <section class="section">
+    <div class="info-box">
+      Hi! I'm <strong>Remi</strong>, a <span class="popup">19 y/o
+        <span class="tooltip">Yep, still a teen at heart ✨</span>
+      </span> who loves
+      <span class="popup">gaming
+        <span class="tooltip">My escape portal into other worlds 🎮</span>
+      </span>
+      and being a
+      <span class="popup">foodie
+        <span class="tooltip">Always chasing the next tasty adventure 🍜</span>
+      </span>.
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>🍱 My Top 5 Favorite Foods</h2>
+    <div class="food-gallery">
+      <div class="food-item"><img src="1.jpg" alt="Food 1"></div>
+      <div class="food-item"><img src="2.jpg" alt="Food 2"></div>
+      <div class="food-item"><img src="3.jpg" alt="Food 3"></div>
+      <div class="food-item"><img src="4.jpg" alt="Food 4"></div>
+      <div class="food-item"><img src="5.jpg" alt="Food 5"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h3>🎵 My Top 5 Favorite Songs</h3>
+    <div class="song-gallery">
+      <div class="song-item" onmouseover="playSong(0)" onmouseout="stopSong(0)">
+        <img src="song1.jpeg" alt="Song 1">
+      </div>
+      <div class="song-item" onmouseover="playSong(1)" onmouseout="stopSong(1)">
+        <img src="song2.png" alt="Song 2">
+      </div>
+      <div class="song-item" onmouseover="playSong(2)" onmouseout="stopSong(2)">
+        <img src="song3.png" alt="Song 3">
+      </div>
+      <div class="song-item" onmouseover="playSong(3)" onmouseout="stopSong(3)">
+        <img src="song4.jpg" alt="Song 4">
+      </div>
+      <div class="song-item" onmouseover="playSong(4)" onmouseout="stopSong(4)">
+        <img src="song5.jpeg" alt="Song 5">
+      </div>
+    </div>
+  </section>
+
+  <!-- Audio elements -->
+  <audio id="audio0" src="song1.mp3" autoplay></audio>
+  <audio id="audio1" src="song2.mp3" autoplay></audio>
+  <audio id="audio2" src="song3.mp3" autoplay></audio>
+  <audio id="audio3" src="song4.mp3" autoplay></audio>
+  <audio id="audio4" src="song5.mp3" autoplay></audio>
+
+  <script>
+
+    const audios = [
+      document.getElementById("audio0"),
+      document.getElementById("audio1"),
+      document.getElementById("audio2"),
+      document.getElementById("audio3"),
+      document.getElementById("audio4"),
+    ];
+
+    function playSong(index) {
+      stopAll();
+      audios[index].currentTime = 0;
+      audios[index].play();
+    }
+
+    function stopSong(index) {
+      audios[index].pause();
+      audios[index].currentTime = 0;
+    }
+
+    function stopAll() {
+      audios.forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+    }
+
+    // Floating pastel shapes
+  for (let i = 0; i < 25; i++) {
+    const shape = document.createElement('div');
+    shape.className = 'floating-shape';
+    shape.style.left = Math.random() * 100 + 'vw';
+    shape.style.animationDuration = 15 + Math.random() * 15 + 's';
+    shape.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 85%)`;
+    shape.style.width = shape.style.height = Math.random() * 20 + 10 + 'px';
+    document.body.appendChild(shape);
+  }
+
+  // Click background interaction
+  document.body.addEventListener('click', (e) => {
+    document.body.classList.remove('clicked'); // reset
+    document.body.offsetHeight; // force reflow
+    document.body.style.setProperty('--click-x', `${e.clientX}px`);
+    document.body.style.setProperty('--click-y', `${e.clientY}px`);
+    document.body.classList.add('clicked');
+  });
+  </script>
+</body>
+</html>
